@@ -1,10 +1,10 @@
 const alertTemplateCode = `
 <template id="xalert-template">
-  <div class="xalert">
+  <dialog class="xalert">
     <h2 class="xalert__title"></h2>
     <div class="xalert__content"></div>
     <div class="xalert__buttons"></div>
-  </div>
+  </dialog>
 </template>
 `;
 
@@ -13,7 +13,6 @@ const alertTemplateCode = `
  * @property {string} text - Label of the option
  * @property {string} [className] - Class of the option
  * @property {any} value - The value to pass through to resolve or reject
- * @property {boolean} [rejects] - whether clicking the button rejects or resolves (default) the Promise
  * @property {boolean} [focus=false] - Whether to focus the button when the alert opens
  */
 
@@ -34,21 +33,24 @@ export default function xAlert({
   text = undefined,
   buttons = [],
   className = undefined,
-  dismissable = true,
 } = {}) {
-  function xAlertButton(options = {}) {
+  const xAlertButton = (options = {}) => {
     const button = document.createElement('button');
-    const { text = 'no text', className = '', focus = false } = options;
+    const { text = 'no text', className = '', focus = false, value = undefined } = options;
+    button.type = 'button';
+    button.value = value
     button.innerText = text;
     button.className = className;
-    button.autofocus = focus;
+    if (focus) {
+        button.setAttribute('autofocus', '')
+    }
     return button;
   }
 
-  let alertContainer = document.querySelector('#alert-container');
+  let alertContainer = document.querySelector('#xalert-container');
   if (!alertContainer) {
     alertContainer = document.createElement('div');
-    alertContainer.id = 'alert-container';
+    alertContainer.id = 'xalert-container';
     document.body.appendChild(alertContainer);
   }
   let alertTemplate = document.querySelector('#xalert-template');
@@ -59,27 +61,38 @@ export default function xAlert({
 
   return new Promise((resolve, reject) => {
     const templateClone = alertTemplate.content.cloneNode(true);
-    const titleEl = templateClone.querySelector('.xalert__title');
-    titleEl.innerText = title;
-    const contentEl = templateClone.querySelector('.xalert__content');
-    contentEl.innerText = text;
+    const alertEl = templateClone.querySelector('.xalert');
+    // TODO: find out if on cancel we can immediately reopen this?!
+    alertEl.oncancel = e => { reject('canceled' )}
+    alertEl.onclose = e => { reject('esc') }
+    if (className) { alertEl.classList.add(className); }
+    if (title) {
+      const titleEl = templateClone.querySelector('.xalert__title');
+      titleEl.innerText = title;
+    }
+    if (text) {
+      const contentEl = templateClone.querySelector('.xalert__content');
+      contentEl.innerText = text;
+    }
     const buttonsEl = templateClone.querySelector('.xalert__buttons');
     if (buttons.length) {
       buttons.forEach((button) => {
         const buttonEl = xAlertButton(button);
         buttonEl.addEventListener('click', () => {
-          // alertContainer.removeChild(templateClone);
-          console.log(alertContainer);
+          alertEl.close()
+          resolve(button.value);
 
-          if (button.rejects) {
-            reject(button.value);
-          } else {
-            resolve(button.value);
-          }
+          requestAnimationFrame(() => {
+            alertEl.parentNode.removeChild(alertEl)
+          })
         });
         buttonsEl.appendChild(buttonEl);
       });
     }
-    alertContainer.appendChild(templateClone);
+    alertContainer.appendChild(alertEl);
+    alertEl.showModal()
+    requestAnimationFrame(() => {
+      alertEl.querySelector('[autofocus]')?.focus();
+    })
   });
 }

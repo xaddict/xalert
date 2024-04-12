@@ -1,4 +1,4 @@
-  .xalert {
+ .xalert {
     background: white;
     border: 1px solid ButtonBorder;
     border-radius: 0.5rem;
@@ -7,10 +7,11 @@
     min-height: 2rem;
     min-width: 18rem;
     padding: 1rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+
+    &::backdrop {
+      background-color: color-mix(in srgb, white, transparent);
+      backdrop-filter: blur(1px);
+    }
   }
   
   .xalert__title {
@@ -34,11 +35,6 @@
     font: inherit;
     line-height: inherit;
     padding: 0.25em 0.5em;
-  
-    &:focus {
-      outline: 2px solid orange;
-      outline-offset: 2px;
-    }
   }
   
   button.positive {
