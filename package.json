@@ -2,17 +2,18 @@
 	"name": "xalert",
 	"version": "0.0.1",
 	"license": "Apache-2.0",
-    "main": "examples/index.html",
+	"main": "examples/index.html",
 	"browserslist": [
 		"> 1%",
 		"last 2 versions"
 	],
 	"scripts": {
-		"dev": "vite"
+		"dev": "vite",
+		"test": "vitest"
 	},
 	"dependencies": {},
 	"devDependencies": {
 		"vite": "^5.2.8",
-		"vitest": "^1.4.0"
+		"vitest": "^1.5.2"
 	}
 }

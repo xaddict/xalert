@@ -1,9 +1,10 @@
 const alertTemplateCode = `
 <template id="xalert-template">
   <dialog class="xalert">
+    <div class="xalert__icon"></div> 
     <h2 class="xalert__title"></h2>
     <div class="xalert__content"></div>
-    <div class="xalert__buttons"></div>
+    <form method="dialog" class="xalert__buttons"></form>
   </dialog>
 </template>
 `;
@@ -47,6 +48,16 @@ export default function xAlert({
     return button;
   }
 
+  const xAlertIcon = () => {
+    const el = document.createElement('svg')
+    el.innerHTML = "<circle cx='25' cy='25' r='25'></circle>"
+    el.setAttribute('xmlns',  "http://www.w3.org/2000/svg")
+    el.setAttribute('viewBox', '0 0 50 50')
+    el.setAttribute('width', '50')
+    el.setAttribute('height', '50')
+    return el
+  }
+
   let alertContainer = document.querySelector('#xalert-container');
   if (!alertContainer) {
     alertContainer = document.createElement('div');
@@ -64,11 +75,22 @@ export default function xAlert({
     const alertEl = templateClone.querySelector('.xalert');
     // TODO: find out if on cancel we can immediately reopen this?!
     alertEl.oncancel = e => { reject('canceled' )}
-    alertEl.onclose = e => { reject('esc') }
+    alertEl.onclose = e => {
+      requestAnimationFrame(() => {
+        alertEl.parentNode.removeChild(alertEl)
+      })
+      resolve(alertEl.returnValue)
+    }
+    console.log(className)
     if (className) { alertEl.classList.add(className); }
     if (title) {
       const titleEl = templateClone.querySelector('.xalert__title');
       titleEl.innerText = title;
+    }
+    if (icon) {
+      const iconWrapper = templateClone.querySelector('.xalert__icon');
+      const iconEl = xAlertIcon(icon)
+      iconWrapper.appendChild(iconEl)
     }
     if (text) {
       const contentEl = templateClone.querySelector('.xalert__content');
@@ -78,21 +100,15 @@ export default function xAlert({
     if (buttons.length) {
       buttons.forEach((button) => {
         const buttonEl = xAlertButton(button);
-        buttonEl.addEventListener('click', () => {
-          alertEl.close()
-          resolve(button.value);
-
-          requestAnimationFrame(() => {
-            alertEl.parentNode.removeChild(alertEl)
-          })
+        buttonEl.value = button.value
+        buttonEl.addEventListener('click', (event) => {
+          event.preventDefault();
+          alertEl.close(button.value)
         });
         buttonsEl.appendChild(buttonEl);
       });
     }
     alertContainer.appendChild(alertEl);
     alertEl.showModal()
-    requestAnimationFrame(() => {
-      alertEl.querySelector('[autofocus]')?.focus();
-    })
   });
 }

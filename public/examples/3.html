@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xAlert examples: 3. Basic styling</title>
+    <link rel="stylesheet" href="../../src/style.css">
+    <style>
+        style {
+            background-color: lightyellow;
+            display: block;
+            padding: 1rem 0.5rem;
+            margin-bottom: 1rem;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+    <h1>3. Basic styling</h1>
+    <p>The alert, with the basic styling from xAlert and inherited styling from the document</p>
+    <style>
+    body {
+        font-family: system-ui, sans-serif;
+    }
+    h2 {
+        border-bottom: 1px solid gray;
+        padding-bottom: 0.25rem;
+    }
+    button {
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 0.25rem;
+        padding: 0.25rem 0.5rem;
+    }
+    </style>
+    <button id="openAlert">Open Alert 1</button>
+    <output></output>
+
+    <script type="module" src="./1.js"></script>
+</body>
+</html>

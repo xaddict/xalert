@@ -9,10 +9,10 @@ document.querySelector('#alert1').addEventListener('click',() => {
   // alert.then()
   // alert.catch()
 
-
   xAlert({
     title: 'Title',
     text: 'This is the alert text',
+    icon: 'hi',
     buttons: [
       {
         text: 'ok',
@@ -28,14 +28,14 @@ document.querySelector('#alert1').addEventListener('click',() => {
         rejects: true,
       },
     ],
-    class: 'sexy-alert',
+    className: 'xalert--disco',
     dismissable: true,
   })
   .then((e) => {
-    output(`you clicked ${e}`);
+    output(`you clicked '${e}': ${typeof e}`);
   })
   .catch((e) => {
-    output(`alert canceled: ${e}`);
+    output(`dialog got closed: ${e}`);
   });
 })
 
