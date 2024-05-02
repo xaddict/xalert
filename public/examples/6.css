@@ -1,0 +1,100 @@
+:root {
+	font-family: system-ui, sans-serif;
+	font-size: 100%;
+}
+
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+
+h2 {
+	font-weight: 500;
+	font-size: 2rem;
+}
+
+button {
+	--button-bg: white;
+	--button-bg-hover: white;
+	--button-border: silver;
+	--button-color: black;
+	background: var(--button-bg);
+	border: 1px solid var(--button-border);
+	border-radius: 0.25rem;
+	color: var(--button-color);
+	cursor: pointer;
+	font: inherit;
+	font-size: 1.5rem;
+	font-weight: 600;
+	padding: 0.25em 0.5em;
+	transition: background-color 0.3s ease;
+	transition-property: background-color, color, box-shadow, transform;
+
+	&:hover {
+		background: var(--button-bg-hover);
+		box-shadow: 0 1px 2px var(--button-color);
+		transform: translate(0, -1px);
+	}
+}
+
+button.positive {
+	--button-bg: hsl(120, 73%, 75%);
+	--button-bg-hover: hsl(120, 73%, 85%);
+	--button-border: hsl(120, 73%, 55%);
+	--button-color: hsl(120, 73%, 35%);
+}
+
+button.negative {
+	--button-bg: hsl(0, 79%, 72%);
+	--button-bg-hover: hsl(0, 79%, 82%);
+	--button-border: hsl(0, 79%, 52%);
+	--button-color: hsl(0, 79%, 32%);
+}
+
+button.flower {
+	--button-bg: hsl(308, 79%, 72%);
+	--button-bg-hover: hsl(308, 79%, 82%);
+	--button-border: hsl(308, 79%, 52%);
+	--button-color: hsl(308, 79%, 32%);
+}
+
+#xalert-container {
+	perspective: 100vmax;
+}
+
+.xalert {
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+	background-color: hsl(195 53% 97%);
+	backface-visibility: hidden;
+	border: 1px solid hsl(195 53% 55%);
+	box-shadow: none;
+	max-width: 60ch;
+	transform-origin: 50% 50% -10vw;
+
+	&[open] {
+		animation: showTransform 1s, showOpacity 1s;
+	}
+}
+
+.xalert__title {
+	font-size: 2rem;
+}
+
+.xalert__content {
+	font-size: 1.2rem;
+	line-height: 1.4;
+}
+
+.xalert::backdrop {
+	background-image: linear-gradient(white, lightblue 75%, blue, darkblue);
+}
+
+@keyframes showTransform {
+	from { transform: rotateX(-90deg) }
+	to { transform: rotateX(0deg) }
+}
+
+@keyframes showOpacity {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}

@@ -1,4 +1,5 @@
 import xAlert from "../src/xalert.js";
+import output from "./output.js";
 
 document.querySelector('#openAlert').addEventListener('click',() => {
 	xAlert({
@@ -9,18 +10,18 @@ document.querySelector('#openAlert').addEventListener('click',() => {
 				text: 'Okay',
 				className: 'positive',
 				value: true,
-				rejects: false,
 				focus: true,
 			},
 			{
 				text: 'Cancel',
 				className: 'negative',
 				value: false,
-				rejects: true,
 			},
 		],
 		dismissable: true,
 	}).then(value => {
-		
+		output(value)
+	}).catch(error => {
+		output('error: ' + error)
 	})
 })
