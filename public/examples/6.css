@@ -57,36 +57,38 @@ button.flower {
 	--button-color: hsl(308, 79%, 32%);
 }
 
-#xalert-container {
+#trela-container {
 	perspective: 100vmax;
 }
 
-.xalert {
+.trela {
 	animation-timing-function: ease-in-out;
 	animation-fill-mode: forwards;
 	background-color: hsl(195 53% 97%);
 	backface-visibility: hidden;
 	border: 1px solid hsl(195 53% 55%);
-	box-shadow: none;
+	box-shadow: 0 0 0 100vmax hsl(0 0 100% / 0.0);
 	max-width: 60ch;
 	transform-origin: 50% 50% -10vw;
+	transition: box-shadow 1s linear;
+
+	&::backdrop {
+		opacity: 0;
+	}
 
 	&[open] {
 		animation: showTransform 1s, showOpacity 1s;
+		box-shadow: 0 0 0 100vmax hsl(0 0 100% / 0.7);
 	}
 }
 
-.xalert__title {
+.trela__title {
 	font-size: 2rem;
 }
 
-.xalert__content {
+.trela__content {
 	font-size: 1.2rem;
 	line-height: 1.4;
-}
-
-.xalert::backdrop {
-	background-image: linear-gradient(white, lightblue 75%, blue, darkblue);
 }
 
 @keyframes showTransform {

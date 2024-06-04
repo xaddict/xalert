@@ -1,8 +1,8 @@
-import xAlert from "../src/xalert.js";
+import trela from "../src/trela.js";
 import output from "./output.js";
 
 document.querySelector('#openAlert').addEventListener('click',() => {
-	xAlert({
+	trela({
 		title: 'Title',
 		text: 'This is the alert text',
 		buttons: [

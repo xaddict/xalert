@@ -1,8 +1,8 @@
-import xAlert from "../src/xalert.js";
+import trela from "../src/trela.js";
 import output from "./output.js";
 
 document.querySelector('#openAlert').addEventListener('click',() => {
-	xAlert({
+	trela({
 		title: 'Let us talk',
 		text: 'I noticed you looking especially cheerful lately. It is because of the beautiful weather we are having?',
 		buttons: [

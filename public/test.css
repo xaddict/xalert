@@ -22,7 +22,7 @@ button {
 button.positive {
 	background-color: darkgreen;
 	color: white;
-	
+
 	&:hover {
 		background-color: green;
 	}
@@ -31,13 +31,13 @@ button.positive {
 button.negative {
 	background-color: darkred;
 	color: white;
-	
+
 	&:hover {
 		background-color: red;
 	}
 }
 
-.xalert--disco::backdrop {
+.trela--disco::backdrop {
 	background: linear-gradient(
 	hsl(  0 100% 50% / 0.5),
 	hsl( 45 100% 50% / 0.5),

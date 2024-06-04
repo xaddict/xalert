@@ -1,15 +1,15 @@
-import xAlert from "../src/xalert.js";
+import trela from "../src/trela.js";
 import "../src/style.css";
 
 document.querySelector('#alert1').addEventListener('click',() => {
 	// TODO:
-	// let alert = new xAlert({})
-	// alert.fire()
-	// alert.close()
-	// alert.then()
-	// alert.catch()
-	
-	xAlert({
+	// let alert = new trela({})
+	// trela.fire()
+	// trela.close()
+	// trela.then()
+	// trela.catch()
+
+	trela({
 		title: 'Title',
 		text: 'This is the alert text',
 		icon: 'hi',
@@ -40,13 +40,13 @@ document.querySelector('#alert1').addEventListener('click',() => {
 })
 
 setTimeout(() => {
-	xAlert().catch(e => console.log({ e }))
+	trela().catch(e => console.log({ e }))
 }, 3000)
 
 const output = (val) => {
 	const newEl = document.createElement('div')
 	newEl.innerText = val.toString()
-	
+
 	const outputEl = document.querySelector('output')
 	outputEl.appendChild(newEl)
 }

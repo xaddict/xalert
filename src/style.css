@@ -1,4 +1,4 @@
- .xalert {
+ .trela {
 	background: white;
 	border: 1px solid ButtonBorder;
 	border-radius: 0.5rem;
@@ -7,23 +7,23 @@
 	min-height: 2rem;
 	min-width: 18rem;
 	padding: 1rem;
-	
+
 	&::backdrop {
 		background-color: color-mix(in srgb, white, transparent);
 		backdrop-filter: blur(1px);
 	}
 }
 
-.xalert__title {
+.trela__title {
 	font-size: 1.5rem;
 	margin: 0 0 0.5rem 0;
 }
 
-.xalert__content {
+.trela__content {
 	margin: 0 0 0.5rem 0;
 }
 
-.xalert__buttons {
+.trela__buttons {
 	display: flex;
 	gap: 0.5rem;
 }

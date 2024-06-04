@@ -7,12 +7,12 @@ button {
 	font: inherit;
 }
 
-.xalert::backdrop {
+.trela::backdrop {
 	background-color: rgba(0,0,0,.4);
 	backdrop-filter: none;
 }
 
-.xalert {
+.trela {
 	background-color: #fff;
 	border-radius: 5px;
 	font-family: "Lato", "Helvetica Neue", Helvetica, sans-serif;
@@ -20,13 +20,13 @@ button {
 	text-align: center;
 	vertical-align: middle;
 	width: 478px;
-	
+
 	&[open] {
 		animation: showTransform .3s, showOpacity 0.3s;
 	}
 }
 
-.xalert__title {
+.trela__title {
 	color: rgba(0,0,0,.65);
 	font-weight: 600;
 	text-transform: none;
@@ -40,7 +40,7 @@ button {
 	margin-bottom: 13px;
 }
 
-.xalert__content {
+.trela__content {
 	box-sizing: border-box;
 	color: rgba(0, 0, 0, 0.64);
 	display: inline-block;
@@ -65,7 +65,7 @@ button {
 	vertical-align: top
 }
 
-.xalert__buttons {
+.trela__buttons {
 	justify-content: end;
 	margin-top: 13px;
 	padding-bottom: 13px;
@@ -74,7 +74,7 @@ button {
 	padding-top: 13px;
 	pointer-events: auto;
 	text-align: right;
-	
+
 	button {
 		background-color: rgb(124, 209, 249);
 		border: 0 none;
@@ -85,7 +85,7 @@ button {
 		font-size: 14px;
 		font-weight: 600;
 		padding: 10px 24px;
-		
+
 		&:hover {
 			background-color: #78cbf2;
 		}
