@@ -11,10 +11,11 @@ const alertTemplateCode = `
 
 /**
 * @typedef {object} AlertButton
-* @property {string} text - Label of the option
-* @property {string} [className] - Class of the option
-* @property {any} value - The value to pass through to resolve or reject
+* @property {string} [text] - Text of the button
+* @property {string} [className] - Classname of the button
+* @property {any} [value] - The value to pass through to resolve
 * @property {boolean} [focus=false] - Whether to focus the button when the alert opens
+* @property {boolean} [dismiss=false] - Whether to use the button value when the alert gets dismissed
 */
 
 /**
@@ -34,18 +35,30 @@ export default function trela({
 	buttons = [],
 	className = undefined,
 } = {}) {
-	const trelaButton = (options = {}) => {
+	/**
+	 * @param {AlertButton} arguments - The button settings
+	 * @returns {HTMLButtonElement} - A button element
+	 */
+	const trelaButton = ({
+		text = 'no text',
+		className = '',
+		value = undefined,
+		focus = false,
+		dismiss = false
+	} = {}) => {
 		const button = document.createElement('button');
-		const { text = 'no text', className = '', focus = false, value = undefined } = options;
 		button.type = 'button';
 		button.value = value
 		button.innerText = text;
 		button.className = className;
+		button.dismiss = dismiss
 		if (focus) {
 			button.setAttribute('autofocus', '')
 		}
 		return button;
 	}
+
+	let value = undefined
 
 	const trelaIcon = () => {
 		const el = document.createElement('svg')
@@ -72,16 +85,26 @@ export default function trela({
 	return new Promise((resolve, reject) => {
 		const templateClone = alertTemplate.content.cloneNode(true);
 		const alertEl = templateClone.querySelector('.trela');
-		// TODO: find out if on cancel we can immediately reopen this?!
-		alertEl.oncancel = e => { reject('canceled' )}
-		alertEl.onclose = e => {
-			requestAnimationFrame(() => {
-				alertEl.parentNode.removeChild(alertEl)
-			})
-			resolve(alertEl.returnValue)
+		// eslint-disable-next-line no-unused-vars
+		alertEl.oncancel = e => {
+			const dismissButtons = buttons.filter(button => button.dismiss)
+			if (dismissButtons.length > 0) {
+				resolve(dismissButtons.map(button => button.value))
+			} else {
+				reject('canceled')
+			}
 		}
-		console.log(className)
-		if (className) { alertEl.classList.add(className); }
+		// eslint-disable-next-line no-unused-vars
+		alertEl.onclose = e => {
+			setTimeout(() => {
+				alertEl.parentNode.removeChild(alertEl)
+			}, 1000)
+			// resolve(alertEl.returnValue)
+			resolve(value)
+		}
+		if (className) {
+			alertEl.classList.add(className);
+		}
 		if (title) {
 			const titleEl = templateClone.querySelector('.trela__title');
 			titleEl.innerText = title;
@@ -101,6 +124,7 @@ export default function trela({
 				const buttonEl = trelaButton(button);
 				buttonEl.value = button.value
 				buttonEl.addEventListener('click', (event) => {
+					value = button.value
 					event.preventDefault();
 					alertEl.close(button.value)
 				});
@@ -108,6 +132,8 @@ export default function trela({
 			});
 		}
 		alertContainer.appendChild(alertEl);
-		alertEl.showModal()
+		requestAnimationFrame(() => {
+			alertEl.showModal()
+		})
 	});
 }
