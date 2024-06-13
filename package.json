@@ -1,12 +1,29 @@
 {
 	"name": "trela",
-	"description": "A modern alert for modern browsers",
 	"version": "0.0.1",
-	"license": "Apache-2.0",
-	"main": "examples/index.html",
+	"description": "A modern alert for modern browsers",
+	"license": "MIT",
+	"main": "src/trela.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/xaddict/trela.git"
+	},
+	"bugs": {
+		"url": "https://github.com/xaddict/trela/issues"
+	},
+	"author": "Luuk Lamers <oghqdmfg@duck.com>",
+	"keywords": [
+		"trela",
+		"alert",
+		"prompt",
+		"confirm",
+		"dialog",
+		"modal"
+	],
 	"files": [
 		"src/style.css",
-		"src/trela.js"
+		"src/trela.js",
+		"README.md"
 	],
 	"browserslist": [
 		"> 1%",
